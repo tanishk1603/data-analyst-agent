@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Analyst Agent (Ultra-Safe)</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+<header><h1>⚡ Data Analyst Agent</h1><p>Upload a dataset and a .txt with questions to get a report.</p></header>
+<form id="upload-form">
+  <div class="field"><label for="dataset">Dataset (CSV/XLSX/JSON/Parquet)</label><input type="file" id="dataset" name="dataset" accept=".csv,.xlsx,.xls,.json,.parquet"></div>
+  <div class="field"><label for="questions">Questions (.txt) — required</label><input type="file" id="questions" name="questions" accept=".txt" required></div>
+  <div class="row">
+    <div class="field"><label for="has_header">CSV has header?</label><input type="checkbox" id="has_header" name="has_header" checked></div>
+    <div class="field"><label for="sep">CSV separator</label><input type="text" id="sep" name="sep" value=","></div>
+  </div>
+  <button type="submit">Analyze</button>
+</form>
+<section id="result" class="hidden">
+  <h2>Result</h2>
+  <p><strong>Report:</strong> <a id="report-link" href="#" target="_blank" rel="noopener">Open</a></p>
+  <div id="answers"></div>
+  <div id="gallery"></div>
+</section>
+</div>
+<script>
+const form = document.getElementById('upload-form');
+const result = document.getElementById('result');
+const reportLink = document.getElementById('report-link');
+const answersDiv = document.getElementById('answers');
+const gallery = document.getElementById('gallery');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  fd.set('has_header', document.getElementById('has_header').checked ? 'true':'false');
+  try {
+    const resp = await fetch('/api', { method: 'POST', body: fd });
+    if (!resp.ok) { alert('Error: ' + await resp.text()); return; }
+    const data = await resp.json();
+    result.classList.remove('hidden');
+    reportLink.href = data.report_path || '#';
+    const entries = Object.entries(data.answers || {});
+    answersDiv.innerHTML = '<h3>Answers</h3>' + entries.map(([q,a]) => `<p><b>${q}</b><br>${a}</p>`).join('');
+    gallery.innerHTML = '<h3>Charts</h3>' + (data.artifacts || []).map(p => `<img src="${p}" alt="chart">`).join('');
+  } catch (err) { alert('Network/server error: ' + err); }
+});
+</script>
+</body>
+</html>

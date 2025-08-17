@@ -1,0 +1,11 @@
+order_id,customer,category,quantity,price,date
+1,Alice,Books,2,12.5,2024-01-03
+2,Bob,Electronics,1,199.0,2024-01-05
+3,Alice,Groceries,10,2.3,2024-01-06
+4,Chitra,Books,1,10.0,2024-01-06
+5,Deepak,Electronics,3,149.0,2024-01-07
+6,Alice,Groceries,5,3.2,2024-01-09
+7,Elena,Toys,2,24.0,2024-01-10
+8,Farhan,Books,4,11.0,2024-01-12
+9,Gita,Groceries,7,2.8,2024-01-14
+10,Hari,Electronics,1,299.0,2024-01-15

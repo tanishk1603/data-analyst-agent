@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-multipart
+pandas>=2.0,<2.3
+numpy>=1.23
+matplotlib>=3.7
+jinja2
+pydantic>=2.0
+openpyxl
+pyarrow
+scikit-learn
+scipy
+python-dotenv
+google-generativeai
+openai

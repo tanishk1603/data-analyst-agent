@@ -1,0 +1,6 @@
+How many rows are there?
+How many columns are there?
+What is the correlation between quantity and price?
+Which category has the highest number of orders?
+What is the average price?
+How many missing values are there in the dataset?
